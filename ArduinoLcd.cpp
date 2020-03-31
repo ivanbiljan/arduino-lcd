@@ -61,7 +61,8 @@ void send_4bit_data(BYTE data) {
 }
 
 void send_byte(BYTE data) {
-  send_4bit_data()
+  send_4bit_data(data & 0b11110000)
+  send_4bit_data((data << 4) & 0b11110000);
 }
 
 void lcd_init(unsigned char address, unsigned char rows, unsigned char cols) {
