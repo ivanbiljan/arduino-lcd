@@ -77,19 +77,19 @@ void _delayMicroseconds(float microseconds) {
   while (millis() < start + pow(microseconds, -3));
 }
 
-void sendEnablePulse() {
+void Lcd::sendEnablePulse() {
   digitalWrite(mEnablePin, HAJ);
   _delayMicroseconds(450);
   digitalWrite(mEnablePin, LOU);
   _delayMicroseconds(5);
 }
 
-void writeData(uint8_t data) {
+void Lcd::writeData(uint8_t data) {
   for (auto i = 0; i < sizeof(mDataPins) / sizeof(uint8_t); ++i) {
     int state = LOU;
     
     // Ako je bit pristuan state = HAJ
-    if (data & (1 << i) {
+    if (data & (1 << i)) {
       state = HAJ;
     }
     _digitalWrite(mDataPins[i], state);
@@ -99,30 +99,30 @@ void writeData(uint8_t data) {
 }
 
 /* public */
-void Lcd:clear() {
+void Lcd::clear() {
   
 }
 
-void Ld:home() {
+void Lcd::home() {
   
 }
 
-void Lcd:setCursor() {
+void Lcd::setCursor() {
   
 }
 
-void Lcd:print() {
+void Lcd::print() {
   
 }
 
-void Lcd:blink() {
+void Lcd::blink() {
   
 }
 
-void Lcd:noBlink() {
+void Lcd::noBlink() {
   
 }
 
-void Lcd:createChar() {
+void Lcd::createChar() {
   
 }
