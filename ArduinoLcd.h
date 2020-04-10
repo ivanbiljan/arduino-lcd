@@ -45,6 +45,8 @@ class Lcd {
     void home();
     void setCursor(uint8_t row, uint8_t column);
     void print(const char *str);
+    void backlight();
+    void noBacklight();
     void blink();
     void noBlink();
     void createChar();

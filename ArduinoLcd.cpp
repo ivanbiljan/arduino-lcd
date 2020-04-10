@@ -1,3 +1,5 @@
+#include "ArduinoLcd.h"
+
 // Originalna implementacija se temeljila na "time" libraryju
 // i CPU ciklusima ali tome nemamo pristup u tinkercadu
 void Lcd::_delayMicroseconds(float microseconds) {
@@ -71,6 +73,16 @@ void Lcd::print(const char *str) {
   for (int i = 0; i < strlen(str); ++i) {
     writeData((uint8_t) str[i], 1);
   }
+}
+
+void Lcd::backlight() {
+  mDisplayControl &= ~DISPLAYCTRL_DISPLAYON;
+  writeData(DISPLAY_CONTROL | mDisplayControl, LOW);
+}
+
+void Lcd::noBacklight() {
+    mDisplayControl |= DISPLAYCTRL_DISPLAYON;
+  writeData(DISPLAY_CONTROL | mDisplayControl, LOW);
 }
 
 void Lcd::blink() {
