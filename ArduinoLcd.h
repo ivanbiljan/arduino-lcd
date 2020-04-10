@@ -1,9 +1,7 @@
-#include <Print.h>
-
 #ifndef ArduinoLcd
 #define ArduinoLcd
 
-// Instrukcije
+// Instrukcije za LCD
 #define CLEAR_DISPLAY         0b0000000001
 #define RETURN_HOME           0b0000000010
 #define ENTRYMODE_SET         0b0000000100
@@ -16,36 +14,40 @@
 #define WRITE_DATA_TO_ADDRESS 0b1000000000
 #define READ_DATA_FROM_RAM    0b1100000000
 
-// Pin Mode
-#define INPUT 0
-#define OUTPUT 1
-#define INPUT_PULL 2
+// DISPLAY_CONTROL flagovi
+// Objasnjenja -> Str 26, sekcija Display On/Off control
+// Poredak -> Str 28, Figure 11
+#define DISPLAYCTRL_DISPLAYON   0b0000000100
+#define DISPLAYCTRL_CURSORON    0b0000000010
+#define DISPLAYCTRL_CURSORBLINK 0b0000000001
 
-// Write State
-#define HAJ 1
-#define LOU 0
+// FUNCTION_SET flagovi -> Str 28, Figure 11
+// Objasnjenja -> Str 29, Table 8
+#define DISPLAYFUNC_ONELINE_5X8DOTS   0b0000110000
+#define DISPLAYFUNC_ONELINE_5X10DOTS  0b0000110100
+#define DISPLAYFUNC_TWOLINE_5X8DOTS   0b0000111000
 
-class Lcd: public Print {
+// Definicija klase
+class Lcd {
   private: 
     uint8_t mRegisterSelectPin;
     uint8_t mReadWritePin;
     uint8_t mEnablePin;
     uint8_t mDataPins[8];
-    void _pinMode(uint8_t pin, int isOut);
-    void _digitalWrite(uint8_t pin, int state);
+    uint8_t mDisplayControl;
     void _delayMicroseconds(float microseconds);
     void sendEnablePulse();
-    void writeData(uint8_t data);
+    void writeData(uint8_t data, uint8_t mode);
 
   public: 
-    Lcd(uint8_t registerSelect, uint8_t readWrite, uint8_t enable, uint8_t dataPins[8]);
+    void begin();
     void clear();
     void home();
-    void setCursor();
-    void print();
+    void setCursor(uint8_t row, uint8_t column);
+    void print(const char *str);
     void blink();
     void noBlink();
     void createChar();
+    void write(uint8_t data);
 };
-
 #endif
